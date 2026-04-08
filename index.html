@@ -432,39 +432,59 @@
     <p style="font-size:13px;color:var(--muted);max-width:500px;line-height:1.7;margin-bottom:28px;">
       The mayhem bot is funded by <b style="color:var(--text)">$MAYHEMFUN trading fees</b>. When you enable mayhem mode on your coin, the bot starts buying. Here's exactly what it does:
     </p>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;">
-      <div style="background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:18px;">
-        <div style="font-size:10px;color:var(--muted2);margin-bottom:10px;font-weight:600;">01</div>
-        <div style="font-size:20px;margin-bottom:8px;">💰</div>
-        <div style="font-size:13px;font-weight:600;color:#fff;margin-bottom:4px;">Bot receives fees</div>
-        <div style="font-size:12px;color:var(--muted);line-height:1.6;">$MAYHEMFUN trading fees accumulate in the bot's wallet. The more $MAYHEMFUN trades, the more buying power the bot has.</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-bottom:16px;">
+      <div style="background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:20px;">
+        <div style="font-size:10px;color:var(--muted2);margin-bottom:10px;font-weight:600;letter-spacing:1px;">01 — ENTRY</div>
+        <div style="font-size:20px;margin-bottom:10px;">🤖</div>
+        <div style="font-size:13px;font-weight:600;color:#fff;margin-bottom:6px;">Bot buys in</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.7;">The bot uses accumulated $MAYHEMFUN fees to market buy your coin. Real on-chain volume from the moment mayhem mode activates.</div>
       </div>
-      <div style="background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:18px;">
-        <div style="font-size:10px;color:var(--muted2);margin-bottom:10px;font-weight:600;">02</div>
-        <div style="font-size:20px;margin-bottom:8px;">🤖</div>
-        <div style="font-size:13px;font-weight:600;color:#fff;margin-bottom:4px;">Bot buys your coin</div>
-        <div style="font-size:12px;color:var(--muted);line-height:1.6;">When mayhem mode is active, the bot uses accumulated fees to market buy your coin. Real buys, on-chain, adding genuine volume and price action.</div>
+      <div style="background:var(--red-dim);border:1px solid rgba(255,59,59,0.25);border-radius:8px;padding:20px;">
+        <div style="font-size:10px;color:var(--muted2);margin-bottom:10px;font-weight:600;letter-spacing:1px;">02 — LOCK</div>
+        <div style="font-size:20px;margin-bottom:10px;">⏱️</div>
+        <div style="font-size:13px;font-weight:600;color:#fff;margin-bottom:6px;">2 minute strict lock</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.7;">After a buy, the bot enforces a strict 2-minute lock — no selling, no reacting, just letting the position breathe and settle into the chart.</div>
       </div>
-      <div style="background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:18px;border-color:rgba(255,59,59,0.2);background:var(--red-dim);">
-        <div style="font-size:10px;color:var(--muted2);margin-bottom:10px;font-weight:600;">03</div>
-        <div style="font-size:20px;margin-bottom:8px;">⏱️</div>
-        <div style="font-size:13px;font-weight:600;color:#fff;margin-bottom:4px;">2 minute hold</div>
-        <div style="font-size:12px;color:var(--muted);line-height:1.6;">After every buy, the bot holds for exactly <b style="color:var(--text)">2 minutes</b> before selling. This prevents instant dumps and gives real traders time to react to the price action.</div>
+      <div style="background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:20px;">
+        <div style="font-size:10px;color:var(--muted2);margin-bottom:10px;font-weight:600;letter-spacing:1px;">03 — FLOW</div>
+        <div style="font-size:20px;margin-bottom:10px;">🌊</div>
+        <div style="font-size:13px;font-weight:600;color:#fff;margin-bottom:6px;">Rhythm-based execution</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.7;">Once the lock expires, it doesn't dump. Sales go out in controlled slices — <b style="color:var(--text)">10–25%</b> at a time — adapting to what the chart is doing in real time.</div>
       </div>
-      <div style="background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:18px;">
-        <div style="font-size:10px;color:var(--muted2);margin-bottom:10px;font-weight:600;">04</div>
-        <div style="font-size:20px;margin-bottom:8px;">💸</div>
-        <div style="font-size:13px;font-weight:600;color:#fff;margin-bottom:4px;">Profits distributed</div>
-        <div style="font-size:12px;color:var(--muted);line-height:1.6;">After the 2 minute hold, the bot sells and any profit is automatically distributed to <b style="color:var(--text)">$MAYHEMFUN holders</b>. Hold $MAYHEMFUN, earn from every mayhem coin the bot trades.</div>
+      <div style="background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:20px;">
+        <div style="font-size:10px;color:var(--muted2);margin-bottom:10px;font-weight:600;letter-spacing:1px;">04 — DISTRIBUTE</div>
+        <div style="font-size:20px;margin-bottom:10px;">💸</div>
+        <div style="font-size:13px;font-weight:600;color:#fff;margin-bottom:6px;">Profits to holders</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.7;">Profits are automatically distributed to <b style="color:var(--text)">$MAYHEMFUN holders</b>. Hold the token, earn from every coin the bot trades.</div>
       </div>
     </div>
 
-    <div style="margin-top:16px;background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:16px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
-      <div style="font-size:20px;">⚠️</div>
-      <div>
-        <div style="font-size:13px;font-weight:600;color:#fff;margin-bottom:2px;">the bot is not a guaranteed pump</div>
-        <div style="font-size:12px;color:var(--muted);">The bot adds real volume and holds for 2 minutes — it does not guarantee price appreciation. It trades with real money and can take losses. Mayhem mode is experimental.</div>
+    <!-- BEHAVIOR TABLE -->
+    <div style="background:var(--panel);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:16px;">
+      <div style="padding:12px 18px;border-bottom:1px solid var(--border);font-size:11px;font-weight:700;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase;">adaptive sell behavior</div>
+      <div style="padding:0;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;padding:14px 18px;border-bottom:1px solid var(--border);align-items:center;gap:12px;">
+          <div style="font-size:12px;color:var(--muted);">volume is high, buys keep coming</div>
+          <div style="font-size:12px;color:#fff;font-weight:500;">→ leans in, distributes more into strength</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;padding:14px 18px;border-bottom:1px solid var(--border);align-items:center;gap:12px;">
+          <div style="font-size:12px;color:var(--muted);">momentum slows</div>
+          <div style="font-size:12px;color:#fff;font-weight:500;">→ holds back, sells lighter and slower</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;padding:14px 18px;border-bottom:1px solid var(--border);align-items:center;gap:12px;">
+          <div style="font-size:12px;color:var(--muted);">chart heats up</div>
+          <div style="font-size:12px;color:#fff;font-weight:500;">→ scales out more aggressively into liquidity</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;padding:14px 18px;align-items:center;gap:12px;">
+          <div style="font-size:12px;color:var(--muted);">more buys → more volume</div>
+          <div style="font-size:12px;color:var(--red);font-weight:600;">→ more opportunity to sell cleanly</div>
+        </div>
       </div>
+    </div>
+
+    <div style="background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:16px 20px;">
+      <div style="font-size:13px;font-weight:600;color:#fff;margin-bottom:4px;">it's not time-based dumping — it's rhythm-based execution</div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.7;">The bot reads the flow. Instead of killing charts, it feeds into them. More buys = more volume = more opportunity to exit cleanly. Mayhem mode is designed to add momentum, not end it.</div>
     </div>
   </div>
 </div>
