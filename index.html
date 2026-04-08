@@ -324,6 +324,7 @@
   </div>
 
   <div class="nav-right">
+    <a href="https://pump.fun/coin/EhJvoqXaTvTtAqcTGsktjDeRhTz5CcA3UoY84J8Gpump" target="_blank" style="font-size:11px;color:var(--muted);font-family:monospace;background:var(--panel);border:1px solid var(--border);padding:4px 10px;border-radius:5px;transition:all .15s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--muted)'">$MAYHEMFUN</a>
     <button class="launch-trigger" onclick="openModal('launch')">+ start a new coin</button>
     <button class="btn btn-ghost btn-sm" id="connectBtn" onclick="openModal('wallet')">connect wallet</button>
   </div>
@@ -486,6 +487,18 @@
       <div style="font-size:13px;font-weight:600;color:#fff;margin-bottom:4px;">it's not time-based dumping — it's rhythm-based execution</div>
       <div style="font-size:12px;color:var(--muted);line-height:1.7;">The bot reads the flow. Instead of killing charts, it feeds into them. More buys = more volume = more opportunity to exit cleanly. Mayhem mode is designed to add momentum, not end it.</div>
     </div>
+
+    <!-- CA -->
+    <div style="margin-top:12px;background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+      <div>
+        <div style="font-size:10px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px;font-weight:600;">$MAYHEMFUN contract</div>
+        <div style="font-family:monospace;font-size:12px;color:#fff;word-break:break-all;">EhJvoqXaTvTtAqcTGsktjDeRhTz5CcA3UoY84J8Gpump</div>
+      </div>
+      <div style="display:flex;gap:8px;flex-shrink:0;">
+        <button onclick="copyCA()" style="background:var(--panel);border:1px solid var(--border);color:var(--muted);padding:6px 12px;border-radius:5px;font-size:12px;cursor:pointer;font-family:'Inter',sans-serif;transition:all .15s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--muted)'">copy</button>
+        <a href="https://pump.fun/coin/EhJvoqXaTvTtAqcTGsktjDeRhTz5CcA3UoY84J8Gpump" target="_blank" style="background:var(--red);color:#fff;padding:6px 12px;border-radius:5px;font-size:12px;font-weight:600;display:inline-flex;align-items:center;gap:4px;">buy on pump.fun →</a>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -643,6 +656,12 @@
     if (!q.trim()) { renderGrid(); return; }
     const f = q.toLowerCase();
     renderGrid(coins.filter(c => c.name.toLowerCase().includes(f) || c.ticker.toLowerCase().includes(f)));
+  }
+
+  // ── COPY CA ──
+  function copyCA() {
+    navigator.clipboard.writeText('EhJvoqXaTvTtAqcTGsktjDeRhTz5CcA3UoY84J8Gpump');
+    toast('✅ contract address copied');
   }
 
   // ── TOAST ──
