@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>mayhem.fun</title>
+  <link rel="icon" href="/logo.jpg"/>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+    *{box-sizing:border-box;margin:0;padding:0;}
+
+    :root{
+      --bg:#0a0a0a;
+      --panel:#111;
+      --border:#1e1e1e;
+      --border2:#252525;
+      --text:#f0f0f0;
+      --muted:#555;
+      --muted2:#333;
+      --red:#ff3b3b;
+      --red-dim:rgba(255,59,59,0.08);
+    }
+
+    html{scroll-behavior:smooth;}
+    body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:13px;line-height:1.5;-webkit-font-smoothing:antialiased;}
+    a{color:inherit;text-decoration:none;}
+    input,textarea,button,select{font-family:'Inter',sans-serif;}
+
+    /* NAV */
+    nav{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:0 20px;height:48px;
+      border-bottom:1px solid var(--border);
+      background:var(--bg);
+      position:sticky;top:0;z-index:100;
+    }
+
+    .logo{
+      display:flex;align-items:center;gap:8px;
+      font-size:15px;font-weight:700;color:#fff;
+    }
+
+    .logo img{width:26px;height:26px;border-radius:5px;object-fit:cover;}
+
+    .nav-mid{display:flex;align-items:center;gap:4px;}
+
+    .nav-tab{
+      padding:5px 12px;border-radius:5px;
+      font-size:12px;font-weight:500;color:var(--muted);
+      cursor:pointer;transition:all .15s;
+    }
+    .nav-tab:hover{color:var(--text);background:var(--panel);}
+    .nav-tab.active{color:#fff;background:var(--panel);}
+
+    .nav-right{display:flex;align-items:center;gap:8px;}
+
+    .btn{
+      display:inline-flex;align-items:center;gap:5px;
+      padding:6px 14px;border-radius:6px;
+      font-size:12px;font-weight:600;cursor:pointer;
+      border:none;transition:all .15s;
+    }
+    .btn-red{background:var(--red);color:#fff;}
+    .btn-red:hover{background:#ff5252;}
+    .btn-ghost{background:var(--panel);color:var(--text);border:1px solid var(--border);}
+    .btn-ghost:hover{border-color:var(--border2);}
+    .btn-sm{padding:5px 12px;font-size:12px;}
+
+    /* LAUNCH MODAL TRIGGER */
+    .launch-trigger{
+      display:flex;align-items:center;gap:6px;
+      padding:6px 14px;background:var(--red);
+      color:#fff;border-radius:6px;font-size:12px;font-weight:600;
+      cursor:pointer;transition:all .15s;border:none;
+    }
+    .launch-trigger:hover{background:#ff5252;}
+
+    /* MAIN LAYOUT */
+    .page{
+      max-width:1100px;margin:0 auto;
+      padding:20px;
+    }
+
+    /* SEARCH + SORT BAR */
+    .topbar{
+      display:flex;align-items:center;gap:10px;
+      margin-bottom:20px;
+    }
+
+    .search-wrap{
+      flex:1;position:relative;
+    }
+
+    .search-wrap input{
+      width:100%;background:var(--panel);
+      border:1px solid var(--border);border-radius:6px;
+      padding:8px 12px 8px 32px;
+      font-size:13px;color:var(--text);outline:none;
+      transition:border-color .15s;
+    }
+
+    .search-wrap input:focus{border-color:var(--border2);}
+    .search-wrap input::placeholder{color:var(--muted);}
+
+    .search-icon{
+      position:absolute;left:10px;top:50%;transform:translateY(-50%);
+      color:var(--muted);font-size:14px;pointer-events:none;
+    }
+
+    .sort-btn{
+      padding:7px 12px;background:var(--panel);
+      border:1px solid var(--border);border-radius:6px;
+      font-size:12px;color:var(--muted);cursor:pointer;
+      white-space:nowrap;transition:all .15s;
+    }
+    .sort-btn:hover{color:var(--text);}
+    .sort-btn.active{color:#fff;border-color:var(--border2);}
+
+    /* COIN GRID */
+    .coin-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+      gap:10px;
+    }
+
+    .coin-card{
+      background:var(--panel);border:1px solid var(--border);
+      border-radius:8px;padding:14px;cursor:pointer;
+      transition:all .15s;position:relative;
+    }
+
+    .coin-card:hover{border-color:var(--border2);background:#141414;}
+
+    .coin-card-top{display:flex;gap:10px;margin-bottom:10px;}
+
+    .card-pfp{
+      width:52px;height:52px;border-radius:6px;
+      background:var(--border2);flex-shrink:0;overflow:hidden;
+      display:flex;align-items:center;justify-content:center;
+      font-size:22px;
+    }
+
+    .card-pfp img{width:100%;height:100%;object-fit:cover;}
+
+    .card-meta{flex:1;min-width:0;}
+
+    .card-name{
+      font-size:13px;font-weight:600;color:#fff;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+      margin-bottom:2px;
+    }
+
+    .card-ticker{font-size:11px;color:var(--muted);}
+
+    .card-mcap{
+      font-size:11px;color:var(--muted);margin-top:4px;
+    }
+
+    .card-mcap b{color:var(--text);}
+
+    .mayhem-badge{
+      position:absolute;top:10px;right:10px;
+      font-size:9px;font-weight:700;color:var(--red);
+      background:var(--red-dim);border:1px solid rgba(255,59,59,0.2);
+      padding:2px 6px;border-radius:3px;letter-spacing:0.5px;
+    }
+
+    .card-desc{
+      font-size:11px;color:var(--muted);
+      line-height:1.5;
+      display:-webkit-box;-webkit-line-clamp:2;
+      -webkit-box-orient:vertical;overflow:hidden;
+    }
+
+    /* EMPTY STATE */
+    .empty{
+      grid-column:1/-1;
+      text-align:center;padding:80px 20px;color:var(--muted);
+    }
+    .empty .e-icon{font-size:40px;margin-bottom:12px;display:block;}
+    .empty h3{font-size:15px;font-weight:600;color:var(--text);margin-bottom:6px;}
+    .empty p{font-size:13px;}
+
+    /* LAUNCH MODAL */
+    .overlay{
+      position:fixed;inset:0;background:rgba(0,0,0,0.7);
+      z-index:200;display:none;align-items:flex-end;
+      justify-content:center;padding:0;
+      backdrop-filter:blur(2px);
+    }
+
+    .overlay.show{display:flex;}
+
+    @media(min-width:600px){
+      .overlay{align-items:center;padding:20px;}
+    }
+
+    .modal{
+      background:#111;border:1px solid var(--border2);
+      border-radius:12px 12px 0 0;
+      width:100%;max-width:460px;
+      overflow:hidden;
+      animation:modalUp .2s ease;
+      max-height:90vh;overflow-y:auto;
+    }
+
+    @media(min-width:600px){
+      .modal{border-radius:12px;}
+    }
+
+    @keyframes modalUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+
+    .modal-head{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:14px 18px;border-bottom:1px solid var(--border);
+      position:sticky;top:0;background:#111;z-index:1;
+    }
+
+    .modal-head h3{font-size:14px;font-weight:600;color:#fff;}
+
+    .modal-close{
+      background:none;border:none;color:var(--muted);
+      font-size:18px;cursor:pointer;line-height:1;padding:2px 6px;
+      transition:color .15s;border-radius:4px;
+    }
+    .modal-close:hover{color:#fff;background:var(--panel);}
+
+    .modal-body{padding:18px;}
+
+    .field{margin-bottom:14px;}
+    .field label{display:block;font-size:11px;font-weight:600;color:var(--muted);letter-spacing:0.5px;text-transform:uppercase;margin-bottom:6px;}
+
+    .field input,.field textarea{
+      width:100%;background:#0a0a0a;
+      border:1px solid var(--border);border-radius:6px;
+      padding:9px 12px;font-size:13px;color:var(--text);
+      outline:none;transition:border-color .15s;resize:none;
+    }
+
+    .field input:focus,.field textarea:focus{border-color:var(--border2);}
+    .field input::placeholder,.field textarea::placeholder{color:var(--muted2);}
+
+    .field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+
+    .pfp-box{
+      width:100%;height:80px;border:1px dashed var(--border2);
+      border-radius:6px;display:flex;align-items:center;
+      justify-content:center;gap:8px;font-size:13px;color:var(--muted);
+      cursor:pointer;background:#0a0a0a;position:relative;
+      transition:all .15s;
+    }
+    .pfp-box:hover{border-color:var(--muted);}
+    .pfp-box input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+
+    .pfp-preview-img{width:100%;height:80px;object-fit:cover;border-radius:6px;display:none;}
+
+    .mayhem-row{
+      display:flex;align-items:center;justify-content:space-between;
+      background:#0a0a0a;border:1px solid var(--border);border-radius:6px;
+      padding:12px 14px;margin-bottom:14px;cursor:pointer;transition:all .15s;
+    }
+    .mayhem-row:hover{border-color:var(--border2);}
+    .mayhem-row.on{border-color:rgba(255,59,59,0.35);background:var(--red-dim);}
+
+    .mr-left .mr-title{font-size:13px;font-weight:600;color:#fff;display:flex;align-items:center;gap:6px;}
+    .mr-left .mr-sub{font-size:11px;color:var(--muted);margin-top:2px;}
+
+    .switch{width:34px;height:18px;background:var(--border2);border-radius:100px;position:relative;transition:background .2s;flex-shrink:0;}
+    .switch.on{background:var(--red);}
+    .knob{position:absolute;width:12px;height:12px;background:#fff;border-radius:50%;top:3px;left:3px;transition:left .2s;}
+    .switch.on .knob{left:19px;}
+
+    .submit-btn{
+      width:100%;padding:11px;background:var(--red);color:#fff;
+      border:none;border-radius:8px;font-size:13px;font-weight:700;
+      cursor:pointer;transition:all .15s;
+      display:flex;align-items:center;justify-content:center;gap:6px;
+    }
+    .submit-btn:hover{background:#ff5252;}
+    .submit-btn:disabled{opacity:0.4;cursor:not-allowed;}
+
+    /* WALLET MODAL */
+    .wallet-opt{
+      display:flex;align-items:center;gap:12px;
+      padding:12px 14px;border:1px solid var(--border);border-radius:8px;
+      cursor:pointer;margin-bottom:8px;background:#0a0a0a;
+      transition:all .15s;
+    }
+    .wallet-opt:hover{border-color:var(--border2);background:var(--panel);}
+    .w-icon{width:34px;height:34px;border-radius:7px;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:var(--border2);font-size:18px;}
+    .w-icon img{width:100%;height:100%;object-fit:cover;}
+    .w-name{font-size:13px;font-weight:500;color:#fff;}
+    .w-sub{font-size:11px;color:var(--muted);}
+    .w-arr{margin-left:auto;color:var(--muted);}
+
+    /* TOAST */
+    .toast{
+      position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
+      z-index:400;background:#1a1a1a;border:1px solid var(--border2);
+      border-radius:8px;padding:10px 16px;
+      display:none;align-items:center;gap:8px;
+      font-size:13px;white-space:nowrap;
+      box-shadow:0 4px 20px rgba(0,0,0,0.5);
+      animation:toastIn .2s ease;
+    }
+    .toast.show{display:flex;}
+    @keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(6px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">
+    <img src="/logo.jpg" alt="mayhem"/>
+    mayhem.fun
+  </div>
+
+  <div class="nav-mid">
+    <div class="nav-tab active" onclick="setTab(this,'new')">new</div>
+    <div class="nav-tab" onclick="setTab(this,'mayhem')">🔴 mayhem</div>
+    <div class="nav-tab" onclick="setTab(this,'trending')">trending</div>
+  </div>
+
+  <div class="nav-right">
+    <button class="launch-trigger" onclick="openModal('launch')">+ start a new coin</button>
+    <button class="btn btn-ghost btn-sm" id="connectBtn" onclick="openModal('wallet')">connect wallet</button>
+  </div>
+</nav>
+
+<!-- PAGE -->
+<div class="page">
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="text" placeholder="search coins..." oninput="filterCoins(this.value)"/>
+    </div>
+    <div class="sort-btn active" onclick="sortBy('new',this)">new</div>
+    <div class="sort-btn" onclick="sortBy('mcap',this)">market cap</div>
+    <div class="sort-btn" onclick="sortBy('mayhem',this)">mayhem</div>
+  </div>
+
+  <!-- COIN GRID -->
+  <div class="coin-grid" id="coinGrid">
+    <div class="empty">
+      <span class="e-icon">💊</span>
+      <h3>no coins yet</h3>
+      <p>be the first to launch on mayhem.fun</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- LAUNCH MODAL -->
+<div class="overlay" id="launchOverlay" onclick="overlayClick(event,'launchOverlay')">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>start a new coin</h3>
+      <button class="modal-close" onclick="closeModal('launch')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="field">
+        <label>image</label>
+        <div class="pfp-box" id="pfpBox">
+          📷 upload image
+          <input type="file" accept="image/*" onchange="handlePfp(this)"/>
+        </div>
+        <img id="pfpImg" class="pfp-preview-img"/>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>name</label>
+          <input type="text" id="coinName" placeholder="My Coin"/>
+        </div>
+        <div class="field">
+          <label>ticker</label>
+          <input type="text" id="coinTicker" placeholder="COIN" oninput="this.value=this.value.toUpperCase().replace(/[^A-Z0-9]/g,'')"/>
+        </div>
+      </div>
+      <div class="field">
+        <label>description</label>
+        <textarea id="coinDesc" rows="3" placeholder="tell people what this is about..."></textarea>
+      </div>
+      <div class="mayhem-row" id="mayhemRow" onclick="toggleMayhem()">
+        <div class="mr-left">
+          <div class="mr-title">🔴 mayhem mode <span id="mLabel" style="font-size:10px;color:var(--muted);font-weight:400;">(off)</span></div>
+          <div class="mr-sub">bot buys your coin, holds 2 min, distributes profits to $MAYHEMFUN holders</div>
+        </div>
+        <div class="switch" id="mSwitch"><div class="knob"></div></div>
+      </div>
+      <button class="submit-btn" id="launchBtn" onclick="launchCoin()">launch coin 🚀</button>
+    </div>
+  </div>
+</div>
+
+<!-- WALLET MODAL -->
+<div class="overlay" id="walletOverlay" onclick="overlayClick(event,'walletOverlay')">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>connect wallet</h3>
+      <button class="modal-close" onclick="closeModal('wallet')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="wallet-opt" onclick="connectPhantom()">
+        <div class="w-icon">👻</div>
+        <div>
+          <div class="w-name">Phantom</div>
+          <div class="w-sub">Solana</div>
+        </div>
+        <span class="w-arr">→</span>
+      </div>
+      <div class="wallet-opt" onclick="toast('🔧','Solflare coming soon')">
+        <div class="w-icon">🔥</div>
+        <div>
+          <div class="w-name">Solflare</div>
+          <div class="w-sub">Solana</div>
+        </div>
+        <span class="w-arr">→</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div style="border-top:1px solid var(--border);margin-top:40px;">
+  <div style="max-width:1100px;margin:0 auto;padding:40px 20px;">
+    <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;">mayhem bot</div>
+    <h2 style="font-size:22px;font-weight:700;color:#fff;letter-spacing:-0.5px;margin-bottom:8px;">how the bot works</h2>
+    <p style="font-size:13px;color:var(--muted);max-width:500px;line-height:1.7;margin-bottom:28px;">
+      The mayhem bot is funded by <b style="color:var(--text)">$MAYHEMFUN trading fees</b>. When you enable mayhem mode on your coin, the bot starts buying. Here's exactly what it does:
+    </p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;">
+      <div style="background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:18px;">
+        <div style="font-size:10px;color:var(--muted2);margin-bottom:10px;font-weight:600;">01</div>
+        <div style="font-size:20px;margin-bottom:8px;">💰</div>
+        <div style="font-size:13px;font-weight:600;color:#fff;margin-bottom:4px;">Bot receives fees</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.6;">$MAYHEMFUN trading fees accumulate in the bot's wallet. The more $MAYHEMFUN trades, the more buying power the bot has.</div>
+      </div>
+      <div style="background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:18px;">
+        <div style="font-size:10px;color:var(--muted2);margin-bottom:10px;font-weight:600;">02</div>
+        <div style="font-size:20px;margin-bottom:8px;">🤖</div>
+        <div style="font-size:13px;font-weight:600;color:#fff;margin-bottom:4px;">Bot buys your coin</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.6;">When mayhem mode is active, the bot uses accumulated fees to market buy your coin. Real buys, on-chain, adding genuine volume and price action.</div>
+      </div>
+      <div style="background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:18px;border-color:rgba(255,59,59,0.2);background:var(--red-dim);">
+        <div style="font-size:10px;color:var(--muted2);margin-bottom:10px;font-weight:600;">03</div>
+        <div style="font-size:20px;margin-bottom:8px;">⏱️</div>
+        <div style="font-size:13px;font-weight:600;color:#fff;margin-bottom:4px;">2 minute hold</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.6;">After every buy, the bot holds for exactly <b style="color:var(--text)">2 minutes</b> before selling. This prevents instant dumps and gives real traders time to react to the price action.</div>
+      </div>
+      <div style="background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:18px;">
+        <div style="font-size:10px;color:var(--muted2);margin-bottom:10px;font-weight:600;">04</div>
+        <div style="font-size:20px;margin-bottom:8px;">💸</div>
+        <div style="font-size:13px;font-weight:600;color:#fff;margin-bottom:4px;">Profits distributed</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.6;">After the 2 minute hold, the bot sells and any profit is automatically distributed to <b style="color:var(--text)">$MAYHEMFUN holders</b>. Hold $MAYHEMFUN, earn from every mayhem coin the bot trades.</div>
+      </div>
+    </div>
+
+    <div style="margin-top:16px;background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:16px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+      <div style="font-size:20px;">⚠️</div>
+      <div>
+        <div style="font-size:13px;font-weight:600;color:#fff;margin-bottom:2px;">the bot is not a guaranteed pump</div>
+        <div style="font-size:12px;color:var(--muted);">The bot adds real volume and holds for 2 minutes — it does not guarantee price appreciation. It trades with real money and can take losses. Mayhem mode is experimental.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+  let connected = false;
+  let walletAddr = null;
+  let mayhemOn = false;
+  let coins = [];
+  let pfpDataUrl = null;
+
+  // ── MODALS ──
+  function openModal(type) {
+    document.getElementById(type+'Overlay').classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal(type) {
+    document.getElementById(type+'Overlay').classList.remove('show');
+    document.body.style.overflow = '';
+  }
+
+  function overlayClick(e, id) {
+    if (e.target === document.getElementById(id)) closeModal(id.replace('Overlay',''));
+  }
+
+  // ── WALLET ──
+  async function connectPhantom() {
+    closeModal('wallet');
+    if (window.solana?.isPhantom) {
+      try {
+        const r = await window.solana.connect();
+        walletAddr = r.publicKey.toString();
+        connected = true;
+        const s = walletAddr.slice(0,4)+'...'+walletAddr.slice(-4);
+        document.getElementById('connectBtn').textContent = s;
+        toast('✅ wallet connected — '+s);
+      } catch {
+        toast('❌ connection rejected');
+      }
+    } else {
+      window.open('https://phantom.app/','_blank');
+      toast('👻 phantom not found — opening phantom.app');
+    }
+  }
+
+  // ── MAYHEM TOGGLE ──
+  function toggleMayhem() {
+    mayhemOn = !mayhemOn;
+    document.getElementById('mSwitch').classList.toggle('on', mayhemOn);
+    document.getElementById('mayhemRow').classList.toggle('on', mayhemOn);
+    document.getElementById('mLabel').textContent = mayhemOn ? '(on)' : '(off)';
+    document.getElementById('mLabel').style.color = mayhemOn ? 'var(--red)' : 'var(--muted)';
+  }
+
+  // ── PFP ──
+  function handlePfp(input) {
+    const file = input.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      pfpDataUrl = e.target.result;
+      document.getElementById('pfpImg').src = pfpDataUrl;
+      document.getElementById('pfpImg').style.display = 'block';
+      document.getElementById('pfpBox').style.display = 'none';
+    };
+    reader.readAsDataURL(file);
+  }
+
+  // ── LAUNCH ──
+  function launchCoin() {
+    if (!connected) { openModal('wallet'); return; }
+    const name = document.getElementById('coinName').value.trim();
+    const ticker = document.getElementById('coinTicker').value.trim();
+    const desc = document.getElementById('coinDesc').value.trim();
+    if (!name || !ticker) { toast('⚠️ name and ticker required'); return; }
+
+    const btn = document.getElementById('launchBtn');
+    btn.disabled = true;
+    btn.textContent = 'launching...';
+
+    setTimeout(() => {
+      const coin = { name, ticker, desc, mayhem: mayhemOn, pfp: pfpDataUrl, mcap: 0, ts: Date.now() };
+      coins.unshift(coin);
+      renderGrid();
+      closeModal('launch');
+      toast('🚀 '+name+' ($'+ticker+') launched!'+(mayhemOn?' 🔴 mayhem active':''));
+
+      // reset
+      btn.disabled = false;
+      btn.innerHTML = 'launch coin 🚀';
+      document.getElementById('coinName').value = '';
+      document.getElementById('coinTicker').value = '';
+      document.getElementById('coinDesc').value = '';
+      document.getElementById('pfpImg').style.display = 'none';
+      document.getElementById('pfpBox').style.display = 'flex';
+      pfpDataUrl = null;
+      if (mayhemOn) toggleMayhem();
+    }, 1400);
+  }
+
+  // ── GRID ──
+  function renderGrid(list) {
+    const grid = document.getElementById('coinGrid');
+    const data = list || coins;
+    if (!data.length) {
+      grid.innerHTML = `<div class="empty"><span class="e-icon">💊</span><h3>no coins yet</h3><p>be the first to launch on mayhem.fun</p></div>`;
+      return;
+    }
+    grid.innerHTML = data.map(c => `
+      <div class="coin-card">
+        ${c.mayhem ? '<div class="mayhem-badge">🔴 MAYHEM</div>' : ''}
+        <div class="coin-card-top">
+          <div class="card-pfp">
+            ${c.pfp ? `<img src="${c.pfp}" alt=""/>` : '🪙'}
+          </div>
+          <div class="card-meta">
+            <div class="card-name">${esc(c.name)}</div>
+            <div class="card-ticker">$${esc(c.ticker)}</div>
+            <div class="card-mcap">mcap: <b>$${c.mcap.toLocaleString()}</b></div>
+          </div>
+        </div>
+        ${c.desc ? `<div class="card-desc">${esc(c.desc)}</div>` : ''}
+      </div>
+    `).join('');
+  }
+
+  function esc(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  // ── TABS ──
+  function setTab(el, type) {
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    if (type === 'mayhem') renderGrid(coins.filter(c => c.mayhem));
+    else renderGrid(coins);
+  }
+
+  // ── SORT ──
+  function sortBy(type, el) {
+    document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+    let sorted = [...coins];
+    if (type === 'mcap') sorted.sort((a,b) => b.mcap - a.mcap);
+    else if (type === 'mayhem') sorted = sorted.filter(c => c.mayhem);
+    else sorted.sort((a,b) => b.ts - a.ts);
+    renderGrid(sorted);
+  }
+
+  // ── SEARCH ──
+  function filterCoins(q) {
+    if (!q.trim()) { renderGrid(); return; }
+    const f = q.toLowerCase();
+    renderGrid(coins.filter(c => c.name.toLowerCase().includes(f) || c.ticker.toLowerCase().includes(f)));
+  }
+
+  // ── TOAST ──
+  function toast(msg) {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.classList.add('show');
+    setTimeout(() => el.classList.remove('show'), 3000);
+  }
+</script>
+
+</body>
+</html>
